@@ -4,152 +4,676 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prof. Ozgur H. Aydogmus | ASBU</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; color: #2d3748; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
-        a { color: #3182ce; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        h2 { color: #1a365d; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-top: 25px; }
-        
-        /* Tab Navigation Layout */
-        .tab-container { display: flex; justify-content: center; gap: 10px; margin: 30px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-        .tab-btn { background-color: #f7fafc; border: 1px solid #cbd5e0; color: #4a5568; padding: 10px 20px; font-size: 1rem; font-weight: bold; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-        .tab-btn:hover { background-color: #edf2f7; }
-        .tab-btn.active { background-color: #3182ce; color: white; border-color: #3182ce; }
-        
-        /* Content Visibility switches */
-        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        :root {
+            --navy: #1a2744;
+            --navy-mid: #2c3e6b;
+            --blue: #3a5a9b;
+            --blue-light: #5b7ec4;
+            --accent: #c0392b;
+            --accent-soft: #e8d5d3;
+            --bg: #f8f7f4;
+            --bg-card: #ffffff;
+            --border: #ddd8cf;
+            --text: #2a2a2a;
+            --text-mid: #4a4a4a;
+            --text-soft: #777;
+            --badge-code: #1d4e2e;
+            --badge-code-bg: #d4edda;
+            --badge-data: #1a3a5c;
+            --badge-data-bg: #d1e4f5;
+            --badge-pdf: #5a1a0a;
+            --badge-pdf-bg: #f5ddd9;
+            --badge-preprint: #4a3500;
+            --badge-preprint-bg: #fff3cd;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ── Header ── */
+        header {
+            background: var(--navy);
+            color: #fff;
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 40px,
+                rgba(255,255,255,0.015) 40px,
+                rgba(255,255,255,0.015) 41px
+            );
+        }
+        header h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.7rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            position: relative;
+        }
+        .header-title { font-size: 1.05rem; font-weight: 500; color: #c5cedf; margin-top: 6px; }
+        .header-inst  { font-size: 0.95rem; color: #8a9ab8; margin-top: 2px; }
+        .header-links { margin-top: 16px; display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+        .header-links a {
+            color: #a8c4f0;
+            text-decoration: none;
+            font-size: 0.88rem;
+            border: 1px solid rgba(168,196,240,0.35);
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .header-links a:hover { background: rgba(168,196,240,0.15); color: #fff; }
+
+        /* ── Tabs ── */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: var(--navy-mid);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent);
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #a8b8d8;
+            padding: 14px 28px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+        }
+        .tab-btn:hover  { color: #fff; background: rgba(255,255,255,0.06); }
+        .tab-btn.active { color: #fff; border-bottom-color: var(--accent); background: rgba(255,255,255,0.08); }
+
+        /* ── Content wrapper ── */
+        .content-area { max-width: 860px; margin: 0 auto; padding: 40px 24px 60px; }
+
+        .tab-content { display: none; animation: fadeIn 0.25s ease; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        ul { padding-left: 20px; }
-        li { margin-bottom: 10px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+        /* ── Section headings ── */
+        h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--navy);
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+            margin: 36px 0 18px;
+        }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 0; list-style: none; }
+        li { margin-bottom: 0; }
+
+        /* ── Paper entry card ── */
+        .paper-entry {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            position: relative;
+            transition: box-shadow 0.2s;
+        }
+        .paper-entry:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.08); }
+
+        .paper-number {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            font-weight: 300;
+        }
+        .paper-title {
+            font-weight: 600;
+            font-size: 0.97rem;
+            color: var(--navy);
+            margin-bottom: 4px;
+            padding-right: 30px;
+        }
+        .paper-title em { font-style: italic; font-family: 'EB Garamond', serif; font-size: 1.05em; }
+        .paper-authors { font-size: 0.88rem; color: var(--text-mid); margin-bottom: 3px; }
+        .paper-venue   { font-size: 0.88rem; color: var(--text-soft); font-style: italic; }
+
+        /* ── Badge row ── */
+        .badge-row { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 9px; }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 3px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+        .badge:hover { opacity: 0.8; }
+        .badge svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+        .badge-pdf      { background: var(--badge-pdf-bg);      color: var(--badge-pdf);      border: 1px solid #e5b8b0; }
+        .badge-code     { background: var(--badge-code-bg);     color: var(--badge-code);     border: 1px solid #a8d5b5; }
+        .badge-data     { background: var(--badge-data-bg);     color: var(--badge-data);     border: 1px solid #90bce0; }
+        .badge-preprint { background: var(--badge-preprint-bg); color: var(--badge-preprint); border: 1px solid #ffc966; }
+        .badge-ssrn     { background: #ede8f5; color: #3a1a6e; border: 1px solid #c4aee8; }
+        .badge-status   { background: #f0f0f0; color: #555; border: 1px solid #ccc; font-weight: 400; }
+
+        /* ── About tab plain styles ── */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+        }
+        .info-card p, .info-card li { font-size: 0.95rem; color: var(--text-mid); }
+        .info-card ul { list-style: disc; padding-left: 20px; }
+        .info-card li { margin-bottom: 6px; }
+        .info-card strong { color: var(--text); }
+        .fields-text { font-size: 0.95rem; color: var(--text-mid); }
+
+        /* ── Teaching ── */
+        .teach-section { margin-bottom: 24px; }
+        .teach-section h3 { font-size: 1rem; font-weight: 600; color: var(--navy-mid); margin-bottom: 10px; }
+        .teach-list { display: flex; flex-direction: column; gap: 4px; }
+        .teach-item {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            background: var(--navy);
+            color: #8a9ab8;
+            font-size: 0.88rem;
+        }
+        footer a {
+            display: inline-block;
+            margin-top: 10px;
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 22px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        footer a:hover { opacity: 0.85; }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .tab-btn  { padding: 12px 14px; font-size: 0.78rem; letter-spacing: 0.02em; }
+            .content-area { padding: 28px 14px 50px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ================= HEADER PROFILE ================== -->
-    <header style="text-align: center; margin-bottom: 20px;">
-        <h1 style="margin-bottom: 5px; color: #1a365d; font-size: 2.3rem;">Ozgur H. Aydogmus</h1>
-        <p style="margin: 0; font-weight: bold; font-size: 1.1rem;">Professor and Chair, Department of Economics</p>
-        <p style="margin: 0; color: #4a5568;">Social Sciences University of Ankara (ASBU)</p>
-        <p style="margin: 5px 0; font-size: 0.95rem; color: #718096;">Ankara, Turkey</p>
-        <p style="margin: 10px 0; font-size: 0.95rem;">
-            <a href="mailto:ozgur.aydogmus@asbu.edu.tr">ozgur.aydogmus@asbu.edu.tr</a> | 
-            <a href="https://scholar.google.com/citations?user=IfuNSq4AAAAJ" target="_blank">Google Scholar</a> | 
-            <a href="https://orcid.org/0000-0002-9463-7197" target="_blank">ORCID</a>
-        </p>
-    </header>
-
-    <!-- ================= INTERACTIVE BUTTONS ================== -->
-    <div class="tab-container">
-        <button class="tab-btn active" onclick="switchTab('about')">About &amp; Overview</button>
-        <button class="tab-btn" onclick="switchTab('projects')">Ongoing Projects</button>
-        <button class="tab-btn" onclick="switchTab('publications')">Publications</button>
-        <button class="tab-btn" onclick="switchTab('teaching')">Teaching</button>
+<!-- ================= HEADER ================== -->
+<header>
+    <h1>Ozgur H. Aydogmus</h1>
+    <p class="header-title">Professor &amp; Chair, Department of Economics</p>
+    <p class="header-inst">Social Sciences University of Ankara (ASBU) &nbsp;·&nbsp; Ankara, Turkey</p>
+    <div class="header-links">
+        <a href="mailto:ozgur.aydogmus@asbu.edu.tr">ozgur.aydogmus@asbu.edu.tr</a>
+        <a href="https://scholar.google.com/citations?user=IfuNSq4AAAAJ" target="_blank">Google Scholar</a>
+        <a href="https://orcid.org/0000-0002-9463-7197" target="_blank">ORCID</a>
     </div>
+</header>
 
-    <!-- ================= TAB 1: ABOUT & OVERVIEW ================== -->
-    <div id="about" class="tab-content active">
-        <h2>Education</h2>
+<!-- ================= TABS ================== -->
+<div class="tab-container">
+    <button class="tab-btn active" onclick="switchTab('about',this)">About</button>
+    <button class="tab-btn" onclick="switchTab('projects',this)">Projects</button>
+    <button class="tab-btn" onclick="switchTab('publications',this)">Publications</button>
+    <button class="tab-btn" onclick="switchTab('teaching',this)">Teaching</button>
+</div>
+
+<div class="content-area">
+
+<!-- ================= TAB 1: ABOUT ================== -->
+<div id="about" class="tab-content active">
+
+    <h2>Education</h2>
+    <div class="info-card">
         <ul>
-            <li><strong>Iowa State University</strong>, Ames, IA<br>Ph.D. in Applied Mathematics (2008-2013)<br><em>Dissertation: Non-local interactions in spatial evolutionary games</em></li>
-            <li><strong>Ankara University</strong>, Ankara, Turkey<br>M.S. in Mathematics (2005-2007) | B.S. in Mathematics (1999-2004)</li>
-        </ul>
-        <h2>Fields of Interest</h2>
-        <p>Evolutionary game theory; Stochastic processes and deterministic limits; Mathematical models in biology and social sciences; Pattern formation in ecological models.</p>
-        <h2>Academic Appointments</h2>
-        <ul>
-            <li><strong>Professor &amp; Chair</strong> (2024-Present) - Department of Economics, ASBU</li>
-            <li><strong>Visiting Scholar</strong> (2021-2022) - Arizona State University, Mesa, AZ</li>
-            <li><strong>Associate Professor</strong> (2019-2024) - Department of Economics, ASBU</li>
-            <li><strong>Assistant Professor</strong> (2014-2019) - Department of Economics, ASBU</li>
+            <li><strong>Iowa State University</strong>, Ames, IA — Ph.D. Applied Mathematics (2008–2013)<br>
+                <em>Dissertation: Non-local interactions in spatial evolutionary games</em></li>
+            <li style="margin-top:10px;"><strong>Ankara University</strong>, Ankara, Turkey<br>
+                M.S. Mathematics (2005–2007) &nbsp;|&nbsp; B.S. Mathematics (1999–2004)</li>
         </ul>
     </div>
 
-    <!-- ================= TAB 2: ONGOING PROJECTS ================== -->
-    <div id="projects" class="tab-content">
-        <h2>Preprints &amp; Working Papers</h2>
-        <ul>
-            <li>Aydogmus, O. H., &amp; Gurpinar, E. <strong>Investment in Knowledge Assets: The Role of Complementarity, Tacitness, and Cooperation</strong>. SSRN Preprint.</li>
-            <li>Aydogmus, O. H., &amp; Gurpinar, E. <strong>Slow and fast time scales in knowledge economics</strong>. (In preparation).</li>
-            <li>Dagtoros, K., Aydogmus, O. H., &amp; Kang, Y. <strong>Turing patterns arising from two species metapopulation models</strong>. (Submitted).</li>
-            <li>Tunc, H., &amp; Aydogmus, O. H. <strong>A Unified Instance Selection Approach Based on Distributional Similarity for Machine Learning</strong>. (Submitted).</li>
-        </ul>
-        <h2>Student Supervision</h2>
-        <ul>
-            <li><strong>Ph.D. Co-supervisor (2021-2025):</strong> Huseyin Caliskan (Forestry Engineering, Cankiri Karatekin University)<br><em>Thesis: Analysis of wood raw material production-consumption relations and sustainability of forests in Turkey with game theory approach: Nash Equilibrium Application</em></li>
-        </ul>
+    <h2>Fields of Interest</h2>
+    <div class="info-card">
+        <p class="fields-text">Evolutionary game theory &nbsp;·&nbsp; Stochastic processes and deterministic limits &nbsp;·&nbsp; Mathematical models in biology and social sciences &nbsp;·&nbsp; Pattern formation in ecological models &nbsp;·&nbsp; Machine learning (instance selection, data reduction, clustering)</p>
     </div>
 
-    <!-- ================= TAB 3: PUBLICATIONS ================== -->
-    <div id="publications" class="tab-content">
-        <h2>Refereed Journal Publications</h2>
-        <ol reversed>
-            <li>Aydogmus, O. H., &amp; Kang, Y. (2024). <strong>Deterministic Approximation of a Stochastic Imitation Dynamics with Memory</strong>. <em>Dynamic Games and Applications</em>.</li>
-            <li>Gurpinar, E., &amp; Aydogmus, O. H. (2023). <strong>The production and dissemination of knowledge and positive externalities: a game theoretic approach</strong>. <em>Vizyoner Dergisi</em>.</li>
-            <li>Aydogmus, O. H. (2022). <strong>Increasing returns and path dependence in knowledge creation and their effects on the dynamics of patent pools</strong>. <em>Structural Change and Economic Dynamics</em>.</li>
-            <li>Gurpinar, E., &amp; Aydogmus, O. H. (2022). <strong>The Limits of Knowledge as a Public Good: A Strategic Approach to Tacit Knowledge</strong>. <em>Journal of Yasar University</em>.</li>
-            <li>Ergunes, E. B., Aydogmus, O. H., &amp; Onder, H. (2022). <strong>A game theoretic approach to build mating programs for livestock</strong>. <em>Turkish Journal of Veterinary and Animal Sciences</em>.</li>
-            <li>Gurpinar, E., &amp; Aydogmus, O. H. (2022). <strong>Science, Technology and Institutional Change in Knowledge Production: An Evolutionary Game Theoretic Framework</strong>. <em>Dynamic Games and Applications</em>.</li>
-            <li>Aydogmus, O. H., &amp; Kang, Y. (2022). <strong>Analysis of stationary patterns arising from a time-discrete metapopulation model with nonlocal competition</strong>. <em>Discrete and Continuous Dynamical Systems-B</em>.</li>
-            <li>Tor, A. H., &amp; Aydogmus, O. H. (2022). <strong>A modified multiple shooting algorithm for parameter estimation in ODEs using adjoint sensitivity analysis</strong>. <em>Applied Mathematics and Computation</em>.</li>
-            <li>Cagatay, H., Gurpinar, E., &amp; Aydogmus, O. H. (2020). <strong>Does social learning promote cooperation in social dilemmas?</strong> <em>Journal of Economic Interaction and Coordination</em>.</li>
-            <li>Aydogmus, O. H. (2018). <strong>Discovering the effect of nonlocal payoff calculation on the stability of ESS: Spatial patterns of Hawk-Dove game in metapopulations</strong>. <em>Journal of Theoretical Biology</em>.</li>
-            <li>Aydogmus, O. H. (2018). <strong>Phase transitions in a logistic metapopulation model with nonlocal competition</strong>. <em>Bulletin of Mathematical Biology</em>.</li>
-            <li>Chumley, T., Matzavinos, A., Roitershtein, A., &amp; Aydogmus, O. H. (2018). <strong>Moran-type Bounds for the Fixation Probability in a Frequency-Dependent Wright-Fisher Model</strong>. <em>Journal of Mathematical Biology</em>.</li>
-            <li>Zhou, W., Kang, Y., &amp; Aydogmus, O. H. (2017). <strong>On the Preservation of Cooperation in Two-Strategy Games with Nonlocal Interactions</strong>. <em>Mathematical Biosciences</em>.</li>
-        </ol>
-
-        <h2>Books &amp; Book Chapters</h2>
+    <h2>Academic Appointments</h2>
+    <div class="info-card">
         <ul>
-            <li>Kirmizikusak, H. N., &amp; Aydogmus, O. H. (2025). <strong>A Game-Theoretical Analysis of Source Allocation in the Early Modern Ottoman Empire...</strong> In B. Altay (Ed.), <em>Revenue-Raising Institutions, State Organization and Economic Change</em>, Palgrave Macmillan.</li>
-            <li>Aydogmus, O. H. (2021). <strong>Limits of Mathematical Models in Social Sciences</strong>. In E. Gurpinar (Ed.), <em>Which Human? Rationality, Social Preferences and Game Theory</em>, Efil.</li>
+            <li><strong>Professor &amp; Chair</strong> (2024–Present) — Department of Economics, ASBU</li>
+            <li><strong>Visiting Scholar</strong> (2021–2022) — Arizona State University, Mesa, AZ</li>
+            <li><strong>Associate Professor</strong> (2019–2024) — Department of Economics, ASBU</li>
+            <li><strong>Assistant Professor</strong> (2014–2019) — Department of Economics, ASBU</li>
+            <li><strong>Lecturer</strong> (2013–2014) — Social Sciences University of Ankara</li>
         </ul>
     </div>
+</div>
 
-    <!-- ================= TAB 4: TEACHING ================== -->
-    <div id="teaching" class="tab-content">
-        <h2>Social Sciences University of Ankara (ASBU)</h2>
-        <ul>
-            <li>Mathematics for Economists I &amp; II (Undergraduate / Graduate)</li>
-            <li>Game Theory &amp; Topics in Game Theory (Undergraduate / Graduate)</li>
-            <li>Data Analytics and Machine Learning</li>
-            <li>Business Calculus I &amp; II</li>
-        </ul>
-        <h2>Iowa State University (Teaching Assistant)</h2>
-        <ul>
-            <li>Elementary Differential Equations and Laplace Transforms</li>
-            <li>Calculus I &amp; II</li>
-            <li>Discrete Mathematics for Business and Social Sciences</li>
-            <li>College Algebra</li>
-        </ul>
-        <p style="font-size: 0.9rem; font-style: italic; color: #718096; margin-top: 15px;">*Note: All courses listed were instructed in English.</p>
+<!-- ================= TAB 2: PROJECTS ================== -->
+<div id="projects" class="tab-content">
+    <h2>Preprints &amp; Working Papers</h2>
+
+    <div class="paper-entry">
+        <div class="paper-title">Investment in Knowledge Assets: The Role of Complementarity, Tacitness, and Cooperation</div>
+        <div class="paper-authors">with Erkan Gurpinar</div>
+        <div class="paper-venue">SSRN Preprint, December 2022</div>
+        <div class="badge-row">
+            <span class="badge badge-status">Working Paper</span>
+            <a class="badge badge-ssrn" href="https://ssrn.com/abstract=4294899" target="_blank">
+                <!-- link icon -->
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
+                SSRN
+            </a>
+        </div>
     </div>
 
-    <!-- ================= DOWNLOAD FOOTER ================== -->
-    <footer style="margin-top: 50px; text-align: center; background-color: #f7fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
-        <p style="margin: 0 0 10px 0; font-weight: bold;">Need the comprehensive print version?</p>
-        <a href="papers/cv_ozgur_aydogmus.pdf" download style="display: inline-block; background-color: #3182ce; color: white; padding: 8px 18px; border-radius: 5px; font-weight: bold; font-size: 0.95rem;">
-            Download Full CV Document (PDF)
-        </a>
-    </footer>
+    <div class="paper-entry">
+        <div class="paper-title">Slow and Fast Time Scales in Knowledge Economics</div>
+        <div class="paper-authors">with Erkan Gurpinar</div>
+        <div class="paper-venue"></div>
+        <div class="badge-row"><span class="badge badge-status">In Preparation</span></div>
+    </div>
 
-    <!-- ================= INTERACTIVE TAB LOGIC ================== -->
-    <script>
-        function switchTab(tabId) {
-            // Hide all tab content panes
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            // Deactivate all tab buttons
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            // Show the target tab panel and style clicked button
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-    </script>
+    <div class="paper-entry">
+        <div class="paper-title">Turing Patterns Arising from Two Species Metapopulation Models</div>
+        <div class="paper-authors">with Kubilay Dagtoros, Yun Kang</div>
+        <div class="badge-row"><span class="badge badge-status">Submitted</span></div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-title">A Unified Instance Selection Approach Based on Distributional Similarity for Machine Learning</div>
+        <div class="paper-authors">with Huseyin Tunc</div>
+        <div class="badge-row">
+            <span class="badge badge-status">Submitted</span>
+            <!-- Replace # with your actual GitHub/repo URL -->
+            <a class="badge badge-code" href="#" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                Code
+            </a>
+            <!-- Replace # with your data repository URL -->
+            <a class="badge badge-data" href="#" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 0v12h8V2H4zm1 2h6v1H5V4zm0 2h6v1H5V6zm0 2h4v1H5V8z"/></svg>
+                Data
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-title">From Local Payoffs to Global Instabilities: A Spectral Cartography of Spatiotemporal Chaos in Canonical 2×2 Evolutionary Games</div>
+        <div class="paper-authors">Ozgur H. Aydogmus</div>
+        <div class="badge-row">
+            <span class="badge badge-status">Under Review</span>
+            <!-- Replace # with your actual code repo URL -->
+            <a class="badge badge-code" href="#" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                Code
+            </a>
+        </div>
+    </div>
+
+    <h2>Student Supervision</h2>
+    <div class="info-card">
+        <ul>
+            <li><strong>Ph.D. Co-supervisor (2021–2025):</strong> Huseyin Caliskan (Forestry Engineering, Cankiri Karatekin University)<br>
+                <em>Analysis of wood raw material production-consumption relations and sustainability of forests in Turkey with game theory approach: Nash Equilibrium Application</em></li>
+        </ul>
+    </div>
+</div>
+
+<!-- ================= TAB 3: PUBLICATIONS ================== -->
+<div id="publications" class="tab-content">
+
+    <!-- ── Preprints ── -->
+    <h2>Preprints &amp; Under Review</h2>
+
+    <div class="paper-entry">
+        <div class="paper-title">From Local Payoffs to Global Instabilities: A Spectral Cartography of Spatiotemporal Chaos in Canonical 2×2 Evolutionary Games</div>
+        <div class="paper-authors">Ozgur H. Aydogmus</div>
+        <div class="badge-row">
+            <span class="badge badge-preprint">Preprint</span>
+            <span class="badge badge-status">Under Review</span>
+            <!-- Replace # with actual preprint server link (arXiv, bioRxiv, etc.) -->
+            <a class="badge badge-pdf" href="papers/spectral_cartography.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/><path d="M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95 11.651 11.651 0 0 0-1.997.406 11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193 11.744 11.744 0 0 1-.51-.858 20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z"/></svg>
+                PDF
+            </a>
+            <a class="badge badge-code" href="#" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                Code
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-title">A Unified Instance Selection Approach Based on Distributional Similarity for Machine Learning</div>
+        <div class="paper-authors">with Huseyin Tunc</div>
+        <div class="badge-row">
+            <span class="badge badge-preprint">Preprint</span>
+            <span class="badge badge-status">Submitted</span>
+            <a class="badge badge-pdf" href="papers/instance_selection.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+            <a class="badge badge-code" href="#" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                Code
+            </a>
+            <a class="badge badge-data" href="#" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 0v12h8V2H4zm1 2h6v1H5V4zm0 2h6v1H5V6zm0 2h4v1H5V8z"/></svg>
+                Data
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-title">Turing Patterns Arising from Two Species Metapopulation Models</div>
+        <div class="paper-authors">with Kubilay Dagtoros, Yun Kang</div>
+        <div class="badge-row">
+            <span class="badge badge-preprint">Preprint</span>
+            <span class="badge badge-status">Submitted</span>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-title">Investment in Knowledge Assets: The Role of Complementarity, Tacitness, and Cooperation</div>
+        <div class="paper-authors">with Erkan Gurpinar</div>
+        <div class="badge-row">
+            <span class="badge badge-status">Working Paper</span>
+            <a class="badge badge-ssrn" href="https://ssrn.com/abstract=4294899" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg>
+                SSRN
+            </a>
+        </div>
+    </div>
+
+    <!-- ── Refereed Publications ── -->
+    <h2>Refereed Journal Publications</h2>
+
+    <div class="paper-entry">
+        <div class="paper-number">[13]</div>
+        <div class="paper-title">Deterministic Approximation of a Stochastic Imitation Dynamics with Memory</div>
+        <div class="paper-authors">with Yun Kang</div>
+        <div class="paper-venue">Dynamic Games and Applications, 2024</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/stochastic_imitation_2024.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[12]</div>
+        <div class="paper-title">The Production and Dissemination of Knowledge and Positive Externalities: A Game Theoretic Approach</div>
+        <div class="paper-authors">with Erkan Gurpinar</div>
+        <div class="paper-venue">Vizyoner Dergisi, 2023</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/knowledge_dissemination_2023.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[11]</div>
+        <div class="paper-title">Increasing Returns and Path Dependence in Knowledge Creation and Their Effects on the Dynamics of Patent Pools</div>
+        <div class="paper-authors">Ozgur H. Aydogmus</div>
+        <div class="paper-venue">Structural Change and Economic Dynamics, 2022</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/patent_pools_2022.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[10]</div>
+        <div class="paper-title">The Limits of Knowledge as a Public Good: A Strategic Approach to Tacit Knowledge</div>
+        <div class="paper-authors">with Erkan Gurpinar</div>
+        <div class="paper-venue">Journal of Yasar University, 2022</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/tacit_knowledge_2022.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[9]</div>
+        <div class="paper-title">A Game Theoretic Approach to Build Mating Programs for Livestock</div>
+        <div class="paper-authors">with Ebru Berkin Ergunes, Hasan Onder</div>
+        <div class="paper-venue">Turkish Journal of Veterinary and Animal Sciences, 2022</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/mating_programs_2022.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[8]</div>
+        <div class="paper-title">Science, Technology and Institutional Change in Knowledge Production: An Evolutionary Game Theoretic Framework</div>
+        <div class="paper-authors">with Erkan Gurpinar</div>
+        <div class="paper-venue">Dynamic Games and Applications, 2022</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/science_technology_2022.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[7]</div>
+        <div class="paper-title">Analysis of Stationary Patterns Arising from a Time-Discrete Metapopulation Model with Nonlocal Competition</div>
+        <div class="paper-authors">with Yun Kang</div>
+        <div class="paper-venue">Discrete and Continuous Dynamical Systems-B, 2022</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/stationary_patterns_2022.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[6]</div>
+        <div class="paper-title">A Modified Multiple Shooting Algorithm for Parameter Estimation in ODEs Using Adjoint Sensitivity Analysis</div>
+        <div class="paper-authors">with A. Hakan Tor</div>
+        <div class="paper-venue">Applied Mathematics and Computation, 2022</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/multiple_shooting_2022.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[5]</div>
+        <div class="paper-title">Does Social Learning Promote Cooperation in Social Dilemmas?</div>
+        <div class="paper-authors">with Hasan Cagatay, Erkan Gurpinar</div>
+        <div class="paper-venue">Journal of Economic Interaction and Coordination, 2020</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/social_learning_2020.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[4]</div>
+        <div class="paper-title">Discovering the Effect of Nonlocal Payoff Calculation on the Stability of ESS: Spatial Patterns of Hawk-Dove Game in Metapopulations</div>
+        <div class="paper-authors">Ozgur H. Aydogmus</div>
+        <div class="paper-venue">Journal of Theoretical Biology, 2018</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/hawk_dove_2018.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[3]</div>
+        <div class="paper-title">Phase Transitions in a Logistic Metapopulation Model with Nonlocal Competition</div>
+        <div class="paper-authors">Ozgur H. Aydogmus</div>
+        <div class="paper-venue">Bulletin of Mathematical Biology, 2018</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/phase_transitions_2018.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[2]</div>
+        <div class="paper-title">Moran-type Bounds for the Fixation Probability in a Frequency-Dependent Wright-Fisher Model</div>
+        <div class="paper-authors">with Timothy Chumley, Anastasios Matzavinos, Alexander Roitershtein</div>
+        <div class="paper-venue">Journal of Mathematical Biology, 2018</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/moran_bounds_2018.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-number">[1]</div>
+        <div class="paper-title">On the Preservation of Cooperation in Two-Strategy Games with Nonlocal Interactions</div>
+        <div class="paper-authors">with Wen Zhou, Yun Kang</div>
+        <div class="paper-venue">Mathematical Biosciences, 2017</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/cooperation_nonlocal_2017.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <h2>Books &amp; Book Chapters</h2>
+
+    <div class="paper-entry">
+        <div class="paper-title">A Game-Theoretical Analysis of Source Allocation in the Early Modern Ottoman Empire Under Contractual Relationships: Case of Thessaloniki Customs</div>
+        <div class="paper-authors">with Hande Nur Kirmizikusak</div>
+        <div class="paper-venue">In B. Altay (Ed.), <em>Revenue-Raising Institutions, State Organization and Economic Change</em>, Palgrave Macmillan, 2025</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/ottoman_game_theory_2025.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="paper-entry">
+        <div class="paper-title">Limits of Mathematical Models in Social Sciences</div>
+        <div class="paper-authors">Ozgur H. Aydogmus</div>
+        <div class="paper-venue">In E. Gurpinar (Ed.), <em>Which Human? Rationality, Social Preferences and Game Theory</em>, Efil, 2021</div>
+        <div class="badge-row">
+            <a class="badge badge-pdf" href="papers/limits_math_models_2021.pdf" target="_blank">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/></svg>
+                PDF
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= TAB 4: TEACHING ================== -->
+<div id="teaching" class="tab-content">
+    <h2>Social Sciences University of Ankara (ASBU)</h2>
+    <div class="teach-section">
+        <div class="teach-list">
+            <div class="teach-item">Mathematics for Economists I &amp; II <span style="color:var(--text-soft);font-size:0.85em;">(Undergraduate / Graduate)</span></div>
+            <div class="teach-item">Game Theory &amp; Topics in Game Theory <span style="color:var(--text-soft);font-size:0.85em;">(Undergraduate / Graduate)</span></div>
+            <div class="teach-item">Data Analytics and Machine Learning</div>
+            <div class="teach-item">Business Calculus I &amp; II</div>
+        </div>
+    </div>
+
+    <h2>Iowa State University <span style="font-size:0.85rem; font-weight:400; color:var(--text-soft);">(Teaching Assistant)</span></h2>
+    <div class="teach-section">
+        <div class="teach-list">
+            <div class="teach-item">Elementary Differential Equations and Laplace Transforms</div>
+            <div class="teach-item">Calculus I &amp; II</div>
+            <div class="teach-item">Discrete Mathematics for Business and Social Sciences</div>
+            <div class="teach-item">College Algebra</div>
+        </div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-soft);margin-top:18px;font-style:italic;">All courses instructed in English.</p>
+</div>
+
+</div><!-- end .content-area -->
+
+<!-- ================= FOOTER ================== -->
+<footer>
+    <p>Download the comprehensive print version</p>
+    <a href="papers/cv_ozgur_aydogmus.pdf" download>Download Full CV (PDF)</a>
+</footer>
+
+<!-- ================= TAB LOGIC ================== -->
+<script>
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+</script>
 
 </body>
 </html>
