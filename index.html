@@ -51,6 +51,7 @@
             content: '';
             position: absolute;
             inset: 0;
+            pointer-events: none;
             background: repeating-linear-gradient(
                 -45deg,
                 transparent,
@@ -65,10 +66,11 @@
             font-weight: 600;
             letter-spacing: 0.02em;
             position: relative;
+            z-index: 1;
         }
-        .header-title { font-size: 1.05rem; font-weight: 500; color: #c5cedf; margin-top: 6px; }
-        .header-inst  { font-size: 0.95rem; color: #8a9ab8; margin-top: 2px; }
-        .header-links { margin-top: 16px; display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+        .header-title { font-size: 1.05rem; font-weight: 500; color: #c5cedf; margin-top: 6px; position: relative; z-index: 1; }
+        .header-inst  { font-size: 0.95rem; color: #8a9ab8; margin-top: 2px; position: relative; z-index: 1; }
+        .header-links { margin-top: 16px; display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; position: relative; z-index: 1; }
         .header-links a {
             color: #a8c4f0;
             text-decoration: none;
